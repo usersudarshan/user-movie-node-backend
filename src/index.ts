@@ -18,9 +18,9 @@ const allowedOrigins = ["http://localhost:5173"]; // Frontend origin (your React
 
 app.use(
   cors({
-    origin: "*",
+    origin: allowedOrigins,
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true, // If you are using cookies or session
   })
 );
 

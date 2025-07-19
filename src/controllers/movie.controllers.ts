@@ -32,6 +32,9 @@ export class MovieController {
     movie.rating = rating;
     movie.image = image;
     movie.cast = cast;
+    if (!title || !description || !director || !year || !rating) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
     const movieRepository = AppDataSource.getRepository(Movie);
     await movieRepository.save(movie);
     return res
@@ -52,7 +55,7 @@ export class MovieController {
     movie.director = director;
     movie.year = year;
     movie.rating = rating;
-    movie.image = image;
+    movie.image = image || "https://example.com/default.jpg";
     movie.cast = cast;
     await movieRepository.save(movie);
     return res
