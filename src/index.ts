@@ -34,9 +34,6 @@ app.use(
   })
 );
 
-// ✅ Handle preflight requests
-app.options("*", cors());
-
 app.use("/auth", userRouter);
 app.use("/api", movieRouter);
 
