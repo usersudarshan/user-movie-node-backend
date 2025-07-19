@@ -25,7 +25,7 @@ export class UserController {
       .json({ message: "User created successfully", token, user });
   }
   static async getUsers(req: Request, res: Response) {
-    const data = cache.get("data");
+    const data = cache.get("users");
     if (data) {
       console.log("serving from cache");
       return res.status(200).json({
@@ -36,7 +36,7 @@ export class UserController {
       const userRepository = AppDataSource.getRepository(User);
       const users = await userRepository.find();
 
-      cache.put("data", users, 6000);
+      cache.put("users", users, 10000);
       return res.status(200).json({
         data: users,
       });
@@ -62,6 +62,7 @@ export class UserController {
       where: { id },
     });
     await userRepository.remove(user);
+    cache.del("users");
     res.status(200).json({ message: "ok" });
   }
 }

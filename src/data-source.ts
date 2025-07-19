@@ -17,7 +17,7 @@ export const AppDataSource = new DataSource({
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_DATABASE,
-  synchronize: NODE_ENV === "dev" ? false : false,
+  synchronize: NODE_ENV === "dev" ? false : true,
   logging: NODE_ENV === "dev" ? false : false,
   entities: [User, Movie],
   migrations: [__dirname + "/migration/*.ts"],

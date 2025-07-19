@@ -5,7 +5,7 @@ import { Movie } from "../entity/Movies.entity";
 
 export class MovieController {
   static async getAllMovies(req: Request, res: Response) {
-    const data = cache.get("data");
+    const data = cache.get("movies");
     if (data) {
       console.log("serving from cache");
       return res.status(200).json({
@@ -15,7 +15,7 @@ export class MovieController {
       console.log("serving from db");
       const movieRepository = AppDataSource.getRepository(Movie);
       const movies = await movieRepository.find();
-      cache.put("data", movies, 10000);
+      cache.put("movies", movies, 10000);
       return res.status(200).json({
         data: movies,
       });
@@ -70,6 +70,7 @@ export class MovieController {
       where: { id },
     });
     await movieRepository.remove(movie);
+    cache.del("movies");
     return res
       .status(200)
       .json({ message: "Movie deleted successfully", movie });
