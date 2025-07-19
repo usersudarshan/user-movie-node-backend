@@ -14,7 +14,10 @@ app.use(express.json());
 const { PORT = 3000 } = process.env;
 app.use(errorHandler);
 
-const allowedOrigins = ["http://localhost:5173"]; // Frontend origin (your React app)
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://react-ts-frontend.onrender.com",
+]; // Frontend origin (your React app)
 
 app.use(
   cors({
