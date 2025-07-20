@@ -8,6 +8,8 @@ export const authentification = (
   res: Response,
   next: NextFunction
 ) => {
+  if (req.method === "OPTIONS") return next();
+
   const header = req.headers.authorization;
   if (!header) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -20,6 +22,6 @@ export const authentification = (
   if (!decode) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-  req[" currentUser"] = decode;
+  req["currentUser"] = decode;
   next();
 };
